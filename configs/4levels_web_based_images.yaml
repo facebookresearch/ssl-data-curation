@@ -1,0 +1,55 @@
+# Number of levels in hierarchical k-means.
+n_levels: 4
+# Number of updates of centroids in the main k-means loop.
+n_iters: 50
+# Number of clusters in each level of hierarchical k-means.
+# For efficiency in the first level, we run first a k-means
+# with 100k clusters, then split each cluster into 100
+# smaller ones to have 10M clusters.
+n_clusters: 
+- 100_000
+- 500_000
+- 50_000
+- 10_000
+# If > 1, run the level in two steps. First, k-means is executed once.
+# Then, each obtained cluster is splitted into "n_split" smaller clusters,
+# which are considered final and used in the subsequent level.
+n_splits:
+- 100
+- 1
+- 1
+- 1
+# Number of resampling steps in each level.
+# For efficiency, we do not use resampling in the first level.
+n_resampling_steps:
+- 1
+- 10
+- 10
+- 10
+# Number of data points sampled from each cluster in the resampling steps.
+# It is roughly half the average cluster size in each level.
+sample_size:
+- 1
+- 10
+- 5
+- 3
+# Specified if running only on a subset of the data pool.
+# For example, we extract embeddings for all images in the data pool,
+# but run the curation pipeline only on a deduplicated subset.
+subset_indices_path: null
+checkpoint_period: 10_000
+dtype: float64
+high_precision: float64
+ngpus_per_node:
+- 8
+- 8
+- 8
+- 8
+nnodes:
+- 16
+- 2
+- 1
+- 1
+ncpus_per_gpu: 10
+sampling_strategy: c
+slurm_partition: null
