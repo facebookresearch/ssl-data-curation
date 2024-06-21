@@ -169,7 +169,7 @@ def hierarchical_kmeans_with_resampling(
                     sorted_clusters = [
                         _cluster[
                             torch.argsort(
-                                torch.cdist(X[_cluster], centroids[i, None])
+                                torch.cdist(X[_cluster[0]].unsqueeze(0), centroids[i, None])
                                 .flatten()
                             )
                             .cpu()
